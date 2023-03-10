@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
+import { CartService } from 'src/app/services/cart.service';
 import { ShopformService } from 'src/app/services/shopform.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class CheckoutComponent implements OnInit {
   billingAddressStates: State[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private shopFormService: ShopformService ) {}
+              private shopFormService: ShopformService,
+              private cartService: CartService ) {}
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
@@ -82,6 +84,13 @@ export class CheckoutComponent implements OnInit {
         this.countries = data;
       }
     )
+    this.reviewCartDetails();
+  }
+  reviewCartDetails() {
+    //subscribe to the cart totalPrice
+    this.cartService.totalPrice.subscribe(totalPrice=>this.totalPrice=totalPrice);
+    //subscribe to the cart totalQuantity
+    this.cartService.totalQuantity.subscribe(totalQuantity=>this.totalQuantity=totalQuantity);
   }
   copyShippingAddressToBillingAddress(event) {
     if(event.target.checked) {

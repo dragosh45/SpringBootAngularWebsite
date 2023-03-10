@@ -1,2 +1,18 @@
-package com.myapps.ecommerce.dto;public class Purchase {
+package com.myapps.ecommerce.dto;
+
+import com.myapps.ecommerce.entity.Address;
+import com.myapps.ecommerce.entity.Customer;
+import com.myapps.ecommerce.entity.Order;
+import com.myapps.ecommerce.entity.OrderItem;
+import lombok.Data;
+
+import java.util.Set;
+
+@Data
+public class Purchase {
+    private Customer customer;
+    private Address shippingAddress;
+    private Address billingAddress;
+    private Order order;
+    private Set<OrderItem> orderItems;
 }
